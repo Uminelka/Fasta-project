@@ -1,0 +1,627 @@
+<!doctype html>
+
+<html lang="ru">
+
+<head>
+
+  <meta charset="utf-8">
+
+  <title>Fasta Project — Документация</title>
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <style>
+
+    :root{
+
+      --bg:#fbfcfe; --panel:#ffffff; --muted:#6b7280; --accent:#1e6fb8;
+
+      --border: #e6eef6; --code-bg:#0f1720; --code-fg:#dbeafe;
+
+    }
+
+    body{font-family: Inter, Roboto, "Helvetica Neue", Arial, sans-serif; margin:0; background:var(--bg); color:#0b1720;}
+
+    title{background:linear-gradient(90deg,#0b6fb8, #1e9ad6); color:white; padding:28px 20px;}
+
+    title h1{margin:0;font-size:28px;letter-spacing:-0.5px;}
+
+    title p{margin:6px 0 0;color:rgba(255,255,255,.9)}
+
+    .wrap{display:flex; gap:20px; max-width:1200px; margin:22px auto; padding:0 16px;}
+
+    nav{width:280px; position:sticky; top:20px; height:calc(100vh - 40px); overflow:auto;}
+
+    nav .box{background:var(--panel); border:1px solid var(--border); padding:14px; border-radius:10px; box-shadow: 0 6px 18px rgba(2,6,23,.04);}
+
+    nav h3{margin:0 0 8px; font-size:14px; color:var(--muted);}
+
+    nav ul{list-style:none; padding:0; margin:0;}
+
+    nav li{margin:6px 0;}
+
+    nav a{color:#0b1720; text-decoration:none; font-size:14px;}
+
+    nav a.small{color:var(--muted); font-size:13px;}
+
+    main{flex:1; min-width:0;}
+
+    article{background:var(--panel); border:1px solid var(--border); padding:26px; border-radius:12px; box-shadow: 0 10px 30px rgba(2,6,23,.04);}
+
+    h2{color:var(--accent); margin-top:0;}
+
+    h3{color:#123c61;}
+
+    .muted{color:var(--muted); font-size:14px;}
+
+    pre{background:#0b1220; color:var(--code-fg); padding:14px; border-radius:8px; overflow:auto; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace; font-size:13px;}
+
+    code{background:#f3f7fb; padding:2px 6px; border-radius:6px; font-family: ui-monospace, monospace;}
+
+    table{border-collapse:collapse; width:100%; margin:10px 0;}
+
+    td,th{padding:8px 10px; border:1px solid var(--border); text-align:left; font-size:14px;}
+
+    .grid{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+
+    .card{background:linear-gradient(180deg,#fff,#fbfdff); padding:12px; border-radius:10px; border:1px solid var(--border);}
+
+    .badge{background:#eef6ff; color:var(--accent); padding:6px 8px; border-radius:6px; font-weight:600; font-size:13px;}
+
+    footer{max-width:1200px; margin:20px auto; padding:0 16px 40px; color:var(--muted); font-size:13px;}
+
+    .toc-title{font-weight:700; color:var(--accent); margin-bottom:8px;}
+
+    .example-output{background:#f8fafc; border-left:4px solid #e1f0ff; padding:12px; border-radius:6px; color:#05223a;}
+
+    .svg-uml{width:100%; height:auto; border:1px solid var(--border); border-radius:8px; background:white; padding:8px;}
+
+    .copy-btn{float:right;background:#e6f2ff;color:var(--accent); border:none; padding:6px 10px; margin-left:8px;border-radius:6px;cursor:pointer;font-weight:600}
+
+    @media (max-width:900px){.wrap{flex-direction:column;padding:12px;} nav{width:100%; height:auto; position:static}}
+
+  </style>
+
+</head>
+
+<body>
+
+  <title>
+
+    <div style="max-width:1200px;margin:0 auto; display:flex; justify-content:space-between; align-items:center;">
+
+      <div>
+
+        <h1>Fasta Project — Документация</h1>
+
+        <p class="muted">Простая библиотека для чтения FASTA-файлов. Классы <code>Seq</code> и <code>FastaReader</code>.</p>
+
+      </div>
+
+      <div style="text-align:right">
+
+        <div class="badge">Версия 0.1.0</div>
+
+      </div>
+
+    </div>
+
+  </title>
+
+
+  <div class="wrap">
+
+    <nav>
+
+      <div class="box">
+
+        <h3>Содержание</h3>
+
+        <ul>
+
+          <li><a href="#intro">Введение</a></li>
+
+          <li><a href="#install">Установка</a></li>
+
+          <li><a href="#quick">Быстрый старт</a></li>
+
+          <li><a href="#api">API</a></li>
+
+          <li style="margin-left:10px"><a class="small" href="#seq">Seq</a></li>
+
+          <li style="margin-left:10px"><a class="small" href="#fasta_reader">FastaReader</a></li>
+
+          <li><a href="#examples">Примеры</a></li>
+
+          <li><a href="#uml">UML диаграмма</a></li>
+
+          <li><a href="#faq">FAQ и советы</a></li>
+
+        </ul>
+
+      </div>
+
+      <div style="height:14px"></div>
+
+      <div class="box" aria-hidden="false">
+
+        <h3>Проект</h3>
+
+        <p class="muted">Лёгкая реализация FASTA-ридера без сторонних биопакетов — идеально для обучения ООП в Python.</p>
+
+        <p class="muted" style="margin-top:8px">Функции: потоковое чтение, определение алфавита, красивый вывод FASTA.</p>
+
+      </div>
+
+    </nav>
+
+
+    <main>
+
+      <article>
+
+        <section id="intro">
+
+          <h2>Введение</h2>
+
+          <p>Этот проект реализует два простых класса для работы с FASTA-файлами:</p>
+
+          <ul>
+
+            <li><strong>Seq</strong> — хранит заголовок и последовательность, умеет возвращать длину, красиво представлять себя в FASTA-формате и определять, нуклеотид это или белок.</li>
+
+            <li><strong>FastaReader</strong> — потоковый (генераторный) ридер FASTA-файлов: читает файл построчно и возвращает объекты <code>Seq</code>, не загружая весь файл в память.</li>
+
+          </ul>
+
+        </section>
+
+
+        <section id="install" style="margin-top:18px;">
+
+          <h2>Установка</h2>
+
+          <p class="muted">Репозиторий предполагает минимальные зависимости — только Python 3.6+.</p>
+
+          <div class="card">
+
+            <strong>Локальная установка (рекомендуется):</strong>
+
+            <pre>python -m venv .venv
+
+source .venv/bin/activate  # Linux / macOS
+
+.venv\Scripts\activate     # Windows
+
+pip install -U pip</pre>
+
+            <p class="muted">Если у тебя есть <code>pyproject.toml</code> или <code>setup.py</code>, можно установить проект в editable-режиме:</p>
+
+            <pre>pip install -e .</pre>
+
+          </div>
+
+        </section>
+
+
+        <section id="quick" style="margin-top:18px;">
+
+          <h2>Быстрый старт</h2>
+
+          <p>Небольшой пример: создаём файл <code>example.fasta</code> с двумя записями, а затем читаем его.</p>
+
+
+          <div style="display:flex; gap:12px; margin-top:8px;">
+
+            <div style="flex:1">
+
+              <h3>example.fasta</h3>
+
+              <pre>>seq1
+
+ACGTACGTACGT
+
+>protein1
+
+MKTWQILV</pre>
+
+            </div>
+
+            <div style="flex:1">
+
+              <h3>demo.py</h3>
+
+              <pre>from fasta import Seq, FastaReader
+
+
+reader = FastaReader('example.fasta')
+
+  for i in reader:
+
+      print(i.title, len(i), i.alphabet())</pre>
+
+            </div>
+
+          </div>
+
+
+          <div class="example-output" style="margin-top:12px;">
+
+            <strong>Ожидаемый вывод:</strong>
+
+            <pre>seq1 12 nucleotide
+
+protein1 8 protein</pre>
+
+          </div>
+
+        </section>
+
+
+        <section id="api" style="margin-top:18px;">
+
+          <h2>API — Подробно</h2>
+
+          <p class="muted">Ниже приведены полные описания классов и их методов. Каждый метод описан: назначение, аргументы, возвращаемое значение, пример.</p>
+
+
+          <div id="seq" style="margin-top:12px;">
+
+            <h3>Класс <code>Seq</code></h3>
+
+            <p><strong>Назначение:</strong> представляет одну запись FASTA — хранит заголовок и последовательность.</p>
+
+
+            <h4>Инициализация</h4>
+
+            <pre><code>Seq(title: str, sequence: str)</code></pre>
+
+            <p><strong>Аргументы:</strong></p>
+
+            <table>
+
+              <tr><th>title</th><td>Строка — заголовок записи (без символа <code>&gt;</code>).</td></tr>
+
+              <tr><th>sequence</th><td>Строка — последовательность; пробелы/переносы будут удалены; приведётся к верхнему регистру.</td></tr>
+
+            </table>
+
+
+            <h4>Методы</h4>
+
+
+            <h5><code>__len__(self) -> int</code></h5>
+
+            <p>Возвращает длину последовательности (количество символов).</p>
+
+            <pre>len_sequence = len(sequence)</pre>
+
+
+            <h5><code>__str__(self) -> str</code></h5>
+
+            <p>Возвращает запись в формате FASTA — строка с заголовком (<code>&gt;title</code>) и секцией последовательности, разбитой по 70 символов.</p>
+
+            <pre>print(sequence)  # выведет FASTA-блок</pre>
+
+
+            <h5><code>alphabet(self) -> str</code></h5>
+
+            <p>Определяет алфавит последовательности. Возвращает одну из строк: <code>'nucleotide'</code>, <code>'protein'</code> или <code>'unknown'</code>.</p>
+
+            <p><strong>Алгоритм (суть):</strong> собирается множество символов в последовательности, сравнивается с предопределёнными множествами символов для нуклеотидов и белков; при смешении применяется простая эвристика по вхождению символов.</p>
+
+            <pre>type_sequence = sequence.alphabet()
+
+# 'nucleotide' или 'protein' или 'unknown'</pre>
+
+
+            <h4>Пример полного использования</h4>
+
+            <pre>seq = Seq("seq1", "ACGTACGTN")
+
+print(len(seq))        # 9
+
+print(seq.alphabet())  # 'nucleotide'
+
+print(str(seq))</pre>
+
+          </div>
+
+
+          <hr style="margin:18px 0">
+
+
+          <div id="fasta_reader">
+
+            <h3>Класс <code>FastaReader</code></h3>
+
+            <p><strong>Назначение:</strong> читать FASTA-файл построчно и возвращать объекты <code>Seq</code>. Поддерживает большие файлы за счёт генератора (yield).</p>
+
+
+            <h4>Инициализация</h4>
+
+            <pre><code>FastaReader(filename: str)</code></pre>
+
+            <table>
+
+              <tr><th>filename</th><td>Путь к файлу FASTA (строка). Поддержка gzip в базовой версии не реализована — можно расширить проверкой расширения и использованием <code>gzip.open</code>.</td></tr>
+
+            </table>
+
+
+            <h4>Методы</h4>
+
+
+            <h5><code>is_fasta(self) -> bool</code></h5>
+
+            <p>Быстрая проверка: читает первые непустые строки файла и возвращает <code>True</code>, если первая непустая строка начинается с символа <code>&gt;</code>. Полезно для ранней валидации входа.</p>
+
+            <pre>reader = FastaReader('example.fasta')
+
+if reader.is_fasta():
+
+    ...</pre>
+
+
+            <h5><code>__iter__(self)</code></h5>
+
+            <p>Итератор: позволяет писать:</p>
+
+            <pre>for i in FastaReader('file.fasta'):
+
+    # i — объект Seq
+
+    print(i.title)</pre>
+
+            <p>Реализация: файл читается построчно, при встрече новой строки-заголовка (<code>&gt;</code>) предыдущая запись собирается и отдается через <code>yield</code>. В конце файла последняя запись тоже возвращается.</p>
+
+
+            <h4>Поведение при ошибках</h4>
+
+            <p class="muted">Базовая реализация не бросает исключения при синтаксических ошибках внутри FASTA — предполагается, что файл корректен. Рекомендуется оборачивать работу в <code>try/except</code> при работе с внешними данными.</p>
+
+
+            <h4>Пример</h4>
+
+            <pre>reader = FastaReader('example.fasta')
+
+for i in reader:
+
+    print(i)  # печатает всю запись в FASTA-формате</pre>
+
+          </div>
+
+        </section>
+
+
+        <section id="examples" style="margin-top:18px;">
+
+          <h2>Примеры</h2>
+
+          <p>Ниже — несколько типичных сценариев использования.</p>
+
+
+          <h3>1. Сводка по файлу</h3>
+
+          <pre>from fasta import FastaReader
+
+
+reader = FastaReader('example.fasta')
+
+for i in reader:
+
+    print(f"{i.title}: length={len(i)}, type={i.alphabet()}")</pre>
+
+
+          <h3>2. Фильтрация по длине</h3>
+
+          <pre>min_len = 100
+
+for i in FastaReader('large.fasta'):
+
+    if len(i) >= min_len:
+
+        # обработать или сохранить
+
+        pass</pre>
+
+
+          <h3>3. Сохранение отфильтрованных записей</h3>
+
+          <pre>with open('filtered.fasta','w') as out:
+
+    for i in FastaReader('data.fasta'):
+
+        if i.alphabet() == 'nucleotide' and len(i) &gt;= 200:
+
+            out.write(str(i) + '\n')</pre>
+
+        </section>
+
+
+        <section id="uml" style="margin-top:18px;">
+
+          <h2>UML (диаграмма классов)</h2>
+
+          <p class="muted">Ниже — встроённое SVG-изображение с диаграммой отношений между классами.</p>
+
+
+          <div class="svg-uml">
+
+            <!-- Простая SVG-диаграмма: Seq и FastaReader -->
+
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 260" width="100%" height="260">
+
+              <defs>
+
+                <style>
+
+                  .box{fill:#fff;stroke:#cfe9ff;stroke-width:2;rx:8;filter:drop-shadow(0 6px 14px rgba(2,6,23,.06));}
+
+                  .title{font:600 16px/1.2rem 'Inter', sans-serif; fill:#0b1720}
+
+                  .text{font:400 13px/1.4rem 'Inter', sans-serif; fill:#234a6b}
+
+                  .arrow{stroke:#a3d0ff; stroke-width:3; fill:none}
+
+                </style>
+
+              </defs>
+
+
+              <!-- Seq box -->
+
+              <it x="40" y="30" width="380" height="190" class="box"></it>
+
+              <text x="60" y="60" class="title">Seq</text>
+
+              <text x="60" y="84" class="text">- title: str</text>
+
+              <text x="60" y="104" class="text">- sequence: str</text>
+
+              <text x="60" y="132" class="text">+ __len__() → int</text>
+
+              <text x="60" y="152" class="text">+ __str__() → str</text>
+
+              <text x="60" y="172" class="text">+ alphabet() → 'nucleotide'|'protein'|'unknown'</text>
+
+
+              <!-- FastaReader box -->
+
+              <it x="480" y="30" width="380" height="150" class="box"></it>
+
+              <text x="500" y="60" class="title">FastaReader</text>
+
+              <text x="500" y="88" class="text">- filename: str</text>
+
+              <text x="500" y="110" class="text">+ is_fasta() → bool</text>
+
+              <text x="500" y="132" class="text">+ __iter__() → Iterator[Seq]</text>
+
+
+              <!-- Arrow from FastaReader to Seq (yields) -->
+
+              <path d="M 420 120 Q 450 110 480 110" class="arrow" marker-end="url(#arrowhead)"/>
+
+              <defs>
+
+                <marker id="arrowhead" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+
+                  <path d="M0,0 L10,4 L0,8 z" fill="#a3d0ff"></path>
+
+                </marker>
+
+              </defs>
+
+              <text x="420" y="100" class="text" style="font-size:12px; fill:#1a5f8f;">yields</text>
+
+            </svg>
+
+          </div>
+
+        </section>
+
+
+        <section id="faq" style="margin-top:18px;">
+
+          <h2>FAQ и советы</h2>
+
+          <h3>Как работать с большими FASTA-файлами?</h3>
+
+          <p>Используй <code>for i in FastaReader('big.fasta'):</code> — благодаря генератору память остаётся небольшой.</p>
+
+
+          <h3>Как поддержать .gz файлы?</h3>
+
+          <p>Проверяй расширение файла: если заканчивается на <code>.gz</code>, используй <code>gzip.open(path, 'rt')</code> вместо <code>open</code>.</p>
+
+
+          <h3>Что если файл содержит некорректные символы?</h3>
+
+          <p class="muted">Можно добавить в Seq проверку и выбрасывать <code>ValueError</code> при встрече запрещённых символов, либо возвращать <code>'unknown'</code> в методе <code>alphabet()</code>.</p>
+
+
+          <h3>Как опубликовать на ReadTheDocs?</h3>
+
+          <ol>
+
+            <li>Добавь Sphinx-конфигурацию и docs/ в репозиторий.</li>
+
+            <li>Создай <code>requirements-docs.txt</code> с зависимостями (sphinx, тема).</li>
+
+            <li>Зарегистрируй репозиторий на readthedocs.org и настрой сборку.</li>
+
+          </ol>
+
+        </section>
+
+      </article>
+
+    </main>
+
+  </div>
+
+
+  <footer>
+
+    <div style="max-width:1200px;margin:0 auto;">
+
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+
+        <div>
+
+          <strong>Fasta Project</strong> — минимальная библиотека для чтения FASTA. Используй и улучшай!
+
+        </div>
+
+        <div class="muted">Сгенерировано локально • Документация — подробная версия</div>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+
+  <script>
+
+    // простая логика: подсветка кода для элементов <pre> (очень базовая)
+
+    (function(){
+
+      // minimal syntax highlight for python keywords (visual only)
+
+      const keywords = ['def','class','return','for','in','if','else','elif','import','from','with','as','yield','try','except','raise','True','False','None'];
+
+      document.querySelectorAll('pre').forEach(pre=>{
+
+        let html = pre.innerHTML
+
+          .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+        // basic keyword highlight
+
+        keywords.forEach(k=>{
+
+          const rx = new RegExp('\\b' + k + '\\b','g');
+
+          html = html.replace(rx, '<span style="color:#9be3ff;font-weight:700;">'+k+'</span>');
+
+        });
+
+        // numbers
+
+        html = html.replace(/(\\b\\d+\\b)/g, '<span style="color:#ffd086;">$1</span>');
+
+        pre.innerHTML = html;
+
+      });
+
+    })();
+
+  </script>
+
+</body>
+
+</html>
+
